@@ -45,15 +45,18 @@ public class ProductReviews {
 		this.comment = comment;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="product_id")
-	private product Product;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private product product; 
 
-	public product getProduct() {
-		return Product;
-	}
-	public void setProduct(product product) {
-		this.Product = product;
-	}
+    // ... (Keep existing constructors and other getters/setters) ...
 
+   
+    public product getProduct() {
+        return product;
+    }
+
+    public void setProduct(product product) {
+        this.product = product;
+    }
 }

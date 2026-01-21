@@ -60,7 +60,7 @@ public class product {
 	private List<productimage> images;
 	
 	@OneToMany(cascade= CascadeType.ALL,orphanRemoval=true)
-	@JoinColumn(name="ProductId")
+	@JoinColumn(name="product_id")
 	private List<ProductReviews> Reviews;
 	
 	public Long getId() {

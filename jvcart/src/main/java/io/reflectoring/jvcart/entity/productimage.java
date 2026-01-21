@@ -12,6 +12,9 @@ public class productimage {
 	private Long Id;
 	private String publicId;
 	private String url;
+	public productimage() {
+		super();
+	}
 	public productimage(Long id, String publicId, String url) {
 		super();
 		Id = id;
