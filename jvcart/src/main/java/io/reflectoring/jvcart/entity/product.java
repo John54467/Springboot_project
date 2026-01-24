@@ -63,6 +63,12 @@ public class product {
 	@JoinColumn(name="product_id")
 	private List<ProductReviews> Reviews;
 	
+	public List<ProductReviews> getReviews() {
+		return Reviews;
+	}
+	public void setReviews(List<ProductReviews> reviews) {
+		Reviews = reviews;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -124,4 +130,6 @@ public class product {
 	public void setNumsofReviews(Integer numsofReviews) {
 		this.numsofReviews = numsofReviews;
 	}
+	
+
 }

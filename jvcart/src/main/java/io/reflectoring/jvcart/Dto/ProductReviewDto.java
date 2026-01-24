@@ -1,17 +1,17 @@
-package io.reflectoring.jvcart.ProductReviewdto;
+package io.reflectoring.jvcart.Dto;
 
 
 
 public class ProductReviewDto {
-	private Long productid;
+	private Long productId;
 	private String comment;
 	private Double rating;
 	
 	public Long getProductId() {
-		return productid;
+		return productId;
 	}
 	public void setProductId(Long productId) {
-		this.productid = productId;
+		this.productId = productId;
 	}
 	public String getComment() {
 		return comment;
