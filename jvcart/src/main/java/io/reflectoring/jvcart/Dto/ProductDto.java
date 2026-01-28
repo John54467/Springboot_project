@@ -1,9 +1,6 @@
 package io.reflectoring.jvcart.Dto;
 import java.util.List;
 
-import io.reflectoring.jvcart.entity.ProductReviews;
-//import io.reflectoring.jvcart.entity.productimage;
-
 
 
 
@@ -39,12 +36,19 @@ public class ProductDto {
 	private Integer numsofReviews=0;
 	
 
-	//private List<productimage> images;
+	private List<ProductImageDto> Images;
 	
 	
+	public List<ProductImageDto> getImages() {
+		return Images;
+	}
+	public void setImages(List<ProductImageDto> Images) {
+		this.Images = Images;
+	}
+
 	private List<ProductReviewDto> Reviews;
 	
-	public List<ProductReviews> getReviews() {
+	public List<ProductReviewDto> getReviews() {
 		return Reviews;
 	}
 	public void setReviews(List<ProductReviewDto> Reviews) {

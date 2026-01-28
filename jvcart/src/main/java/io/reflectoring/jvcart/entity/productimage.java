@@ -1,9 +1,12 @@
 package io.reflectoring.jvcart.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class productimage {
@@ -20,6 +23,17 @@ public class productimage {
 		Id = id;
 		this.publicId = publicId;
 		this.url = url;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id")
+	private product product; 
+	 
+	public productimage( String url, product product) {
+		// TODO Auto-generated constructor stub
+		this.url = "/uploads"+url;
+		this.publicId = url;
+		this.product = product;
 	}
 	public Long getId() {
 		return Id;
@@ -39,5 +53,6 @@ public class productimage {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
 
 }

@@ -1,6 +1,7 @@
 package io.reflectoring.jvcart.entity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -8,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -55,12 +55,16 @@ public class product {
 	}
 	private Integer numsofReviews=0;
 	
-	@OneToMany(cascade= CascadeType.ALL,orphanRemoval=true)
-	@JoinColumn(name="ProductId")
+	@OneToMany(mappedBy = "product", cascade= CascadeType.ALL, orphanRemoval=true)
 	private List<productimage> images;
 	
-	@OneToMany(cascade= CascadeType.ALL,orphanRemoval=true)
-	@JoinColumn(name="product_id")
+	public List<productimage> getImages() {
+		return images;
+	}
+	public void setImages(List<productimage> images) {
+		this.images = images;
+	}
+	@OneToMany(mappedBy = "product", cascade= CascadeType.ALL, orphanRemoval=true)
 	private List<ProductReviews> Reviews;
 	
 	public List<ProductReviews> getReviews() {
@@ -94,7 +98,7 @@ public class product {
 		this.description = description;
 	}
 	public product(Long id, String name, Double price, String description,String category,Double rating, String seller, Integer stock,
-			Integer numsofReviews) {
+			Integer numsofReviews,List<String> images) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -105,6 +109,7 @@ public class product {
 		this.seller = seller;
 		this.stock = stock;
 		this.numsofReviews = numsofReviews;
+		this.images = images.stream().map( url -> new productimage(url,this)).collect(Collectors.toList());
 	}
 	public Double getRating() {
 		return rating;

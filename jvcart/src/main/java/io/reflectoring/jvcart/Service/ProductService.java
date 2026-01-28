@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import io.reflectoring.jvcart.Dto.ProductDto;
+import io.reflectoring.jvcart.Dto.ProductImageDto;
 import io.reflectoring.jvcart.Dto.ProductReviewDto;
 import io.reflectoring.jvcart.ProductSpecification.ProductSpecification;
 import io.reflectoring.jvcart.Repository.ProductRepository;
@@ -21,7 +22,8 @@ import io.reflectoring.jvcart.entity.product;
 
 @Service
 public class ProductService {
-    private final ProductRepository productRepository;
+    private static final ProductImageDto Images = null;
+	private final ProductRepository productRepository;
     private final ProductReviewRepository productReviewRepository;
 
     public ProductService(ProductRepository productRepository, ProductReviewRepository productReviewRepository) {
@@ -59,6 +61,13 @@ public class ProductService {
 		}).collect(Collectors.toList());
 		
 		dto.setReviews(reviewDtos);
+		
+		List<ProductImageDto>  ImagesDtos = Product.getImages().stream().map(review -> {
+			ProductImageDto ImageDto = new ProductImageDto(Images.getUrl());
+			return ImageDto;
+		}).collect(Collectors.toList());
+		
+		dto.setImages(ImagesDtos);
     	return dto;
    
     }

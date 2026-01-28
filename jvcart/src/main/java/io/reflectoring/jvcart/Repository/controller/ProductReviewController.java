@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.reflectoring.jvcart.Dto.ProductReviewDto;
 import io.reflectoring.jvcart.Service.ProductService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/product/reviews")
@@ -20,7 +21,7 @@ public class ProductReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addReview(@RequestBody ProductReviewDto reviewDto){
+    public ResponseEntity<?> addReview(@RequestBody @Valid ProductReviewDto reviewDto){
         // Basic validation: productId is required
         if (reviewDto == null || reviewDto.getProductId() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("productId must be provided");
