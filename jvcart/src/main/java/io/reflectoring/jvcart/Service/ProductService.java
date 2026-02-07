@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.Collections;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +23,6 @@ import io.reflectoring.jvcart.entity.product;
 
 @Service
 public class ProductService {
-    private static final ProductImageDto Images = null;
 	private final ProductRepository productRepository;
     private final ProductReviewRepository productReviewRepository;
 
@@ -52,20 +52,20 @@ public class ProductService {
     	dto.setSeller(Product.getSeller());
     	dto.setStock(Product.getStock());
     	dto.setNumsofReviews(Product.getNumsofReviews());
-		List<ProductReviewDto>  reviewDtos = Product.getReviews().stream().map(review -> {
+		List<ProductReviewDto>  reviewDtos = (Product.getReviews() == null ? Collections.<ProductReviewDto>emptyList() : Product.getReviews().stream().map(review -> {
 			ProductReviewDto reviewDto = new ProductReviewDto();
 			reviewDto.setProductId(review.getId());
 			reviewDto.setComment(review.getComment());
 			reviewDto.setRating(review.getRating());
 			return reviewDto;
-		}).collect(Collectors.toList());
+		}).collect(Collectors.toList()));
 		
 		dto.setReviews(reviewDtos);
 		
-		List<ProductImageDto>  ImagesDtos = Product.getImages().stream().map(review -> {
-			ProductImageDto ImageDto = new ProductImageDto(Images.getUrl());
+		List<ProductImageDto>  ImagesDtos = (Product.getImages() == null ? Collections.<ProductImageDto>emptyList() : Product.getImages().stream().map(image -> {
+			ProductImageDto ImageDto = new ProductImageDto(image.getPublicId());
 			return ImageDto;
-		}).collect(Collectors.toList());
+		}).collect(Collectors.toList()));
 		
 		dto.setImages(ImagesDtos);
     	return dto;
@@ -96,9 +96,6 @@ public class ProductService {
         review.setRating(reviewDto.getRating());
         review.setProduct(Product);
         productReviewRepository.save(review);
-
-
-
     }
 
 }

@@ -30,8 +30,10 @@ public class productimage {
 	private product product; 
 	 
 	public productimage( String url, product product) {
-		// TODO Auto-generated constructor stub
-		this.url = "/uploads"+url;
+		// Store the provided URL as-is. The application serves static files from the `uploads/` directory
+		// (configured in application.properties). Seeded values use paths like "/Product/1.jfif" so
+		// we should not prefix another "/uploads" segment here.
+		this.url = url;
 		this.publicId = url;
 		this.product = product;
 	}
