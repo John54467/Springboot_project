@@ -26,7 +26,7 @@ public class Order {
 	private Double taxAmount;
 	private Double totalAmount;
 	private String status;
-	private String orderNo;
+	private String referenceId;
 	
 	
 	public List<OrderItem> getOrderItems() {
@@ -59,11 +59,11 @@ public class Order {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getOrderNo() {
-		return orderNo;
+	public String getReferenceId() {
+		return referenceId;
 	}
-	public void setOrderNo(String orderNo) {
-		this.orderNo = orderNo;
+	public void setReferenceId(String orderNo) {
+		this.referenceId = orderNo;
 	}
 	
 	

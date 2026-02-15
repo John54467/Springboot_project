@@ -1,9 +1,12 @@
 package io.reflectoring.jvcart.Service;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.reflectoring.jvcart.Dto.CreateOrderRequest;
+import io.reflectoring.jvcart.Dto.OrderCreater;
 import io.reflectoring.jvcart.Dto.OrderItemDto;
 import io.reflectoring.jvcart.Repository.OrderRepository;
 import io.reflectoring.jvcart.Repository.ProductRepository;
@@ -18,7 +21,7 @@ public class OrderService {
 	
 	@Autowired
 	private OrderRepository orderRepo;
-	public Order createOrder(CreateOrderRequest orderRequest) {
+	public OrderCreater createOrder(CreateOrderRequest orderRequest) {
 		Order order = new Order();
 		order.setStatus("PENDING");
 		double TotalItemAmount = 0;
@@ -28,23 +31,31 @@ public class OrderService {
 			orderItem.setPrice(item.getPrice());
 			orderItem.setImage(item.getImage());
 			orderItem.setQuantity(item.getQuantity());
-			
 			product product = ProdRepo.findById(item.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
 			orderItem.setProducts(product);
 			order.getOrderItems().add(orderItem);
-			
+			// accumulate item total
+			TotalItemAmount += item.getPrice() * item.getQuantity();
 		}
+		// set totals
 		order.setTotalAmount(TotalItemAmount);
-		double totalAmount = 0;
-		double taxAmount = 10;
-		totalAmount = TotalItemAmount + taxAmount;
+		double taxAmount = 10; // flat tax for now
+		double totalAmount = TotalItemAmount + taxAmount;
 		order.setTotalAmount(totalAmount);
 		order.setTaxAmount(taxAmount);
-		return orderRepo.save(order);
-		
+		String refId = UUID.randomUUID().toString();
+		order.setReferenceId(refId);
+		orderRepo.save(order);
+		return new OrderCreater(refId);
 		
 		
 	}
+	
+	public Order getOrder(String referenceId) {
+		// Return null if not found so controller can return 404
+		return orderRepo.findByReferenceId(referenceId).orElse(null);
+	}
+	
 	
 
 }
