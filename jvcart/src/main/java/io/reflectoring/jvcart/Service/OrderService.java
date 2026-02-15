@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import io.reflectoring.jvcart.Dto.CreateOrderRequest;
 import io.reflectoring.jvcart.Dto.OrderItemDto;
+import io.reflectoring.jvcart.Repository.OrderRepository;
 import io.reflectoring.jvcart.Repository.ProductRepository;
 import io.reflectoring.jvcart.entity.Order;
 import io.reflectoring.jvcart.entity.OrderItem;
@@ -14,7 +15,10 @@ import io.reflectoring.jvcart.entity.product;
 public class OrderService {
 	@Autowired
 	private ProductRepository ProdRepo;	
-	public void createOrder(CreateOrderRequest orderRequest) {
+	
+	@Autowired
+	private OrderRepository orderRepo;
+	public Order createOrder(CreateOrderRequest orderRequest) {
 		Order order = new Order();
 		order.setStatus("PENDING");
 		double TotalItemAmount = 0;
@@ -29,8 +33,16 @@ public class OrderService {
 			orderItem.setProducts(product);
 			order.getOrderItems().add(orderItem);
 			
-			
 		}
+		order.setTotalAmount(TotalItemAmount);
+		double totalAmount = 0;
+		double taxAmount = 10;
+		totalAmount = TotalItemAmount + taxAmount;
+		order.setTotalAmount(totalAmount);
+		order.setTaxAmount(taxAmount);
+		return orderRepo.save(order);
+		
+		
 		
 	}
 	

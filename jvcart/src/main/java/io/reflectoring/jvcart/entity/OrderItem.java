@@ -51,6 +51,10 @@ public class OrderItem {
 	public void setProducts(product products) {
 		this.products = products;
 	}
+	// Add public no-arg constructor for JPA and to allow new OrderItem()
+	public OrderItem() {
+		super();
+	}
 	public OrderItem(String name, Integer quantity, String image, Double price, product products) {
 		super();
 		this.name = name;
