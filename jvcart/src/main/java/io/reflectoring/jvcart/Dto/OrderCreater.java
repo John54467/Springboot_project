@@ -11,10 +11,6 @@ public class OrderCreater {
 		this.referenceId = referenceId;
 	}
 	
-	public OrderCreater() {
-		// no-arg constructor for frameworks
-	}
-	
 	public OrderCreater(String referenceId) {
 		super();
 		this.referenceId = referenceId;

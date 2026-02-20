@@ -34,13 +34,12 @@ public class OrderService {
 			product product = ProdRepo.findById(item.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
 			orderItem.setProducts(product);
 			order.getOrderItems().add(orderItem);
-			// accumulate item total
-			TotalItemAmount += item.getPrice() * item.getQuantity();
+			
 		}
-		// set totals
 		order.setTotalAmount(TotalItemAmount);
-		double taxAmount = 10; // flat tax for now
-		double totalAmount = TotalItemAmount + taxAmount;
+		double totalAmount = 0;
+		double taxAmount = 10;
+		totalAmount = TotalItemAmount + taxAmount;
 		order.setTotalAmount(totalAmount);
 		order.setTaxAmount(taxAmount);
 		String refId = UUID.randomUUID().toString();
@@ -52,8 +51,8 @@ public class OrderService {
 	}
 	
 	public Order getOrder(String referenceId) {
-		// Return null if not found so controller can return 404
-		return orderRepo.findByReferenceId(referenceId).orElse(null);
+			// TODO Auto-generated method stub
+		return orderRepo.findByReferenceId(referenceId).orElseThrow(() -> new RuntimeException("No order found with Ref Id"));
 	}
 	
 	
